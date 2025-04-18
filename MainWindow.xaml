@@ -1,12 +1,67 @@
-﻿<Window x:Class="WpfApp1.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+﻿<Window
+    x:Class="WpfApp1.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp1"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="TO DO "
+    Width="800"
+    Height="450"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
 
-    </Grid>
+    <DockPanel x:Name="MainPanel" LastChildFill="True">
+        <Button
+            Click="Button_Click"
+            Content="Add Task"
+            DockPanel.Dock="Top" />
+        <StatusBar
+            Height="20"
+            Panel.ZIndex="10000"
+            Background="#4cff00"
+            DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    x:Name="statusTaskStatus"
+                    Margin="0,0,20,0"
+                    Text="{Binding taskStatus, Mode=OneWay}"
+                    ToolTip="Status" />
+                
+                <TextBlock
+                    x:Name="statusTaskTime"
+                    Margin="0,0,20,0"
+                    Text="{Binding taskTime, Mode=OneWay}"
+                    ToolTip="Cuurent Task Time" />
+                <TextBlock
+                    x:Name="statusTaskDate"
+                    Margin="0,0,20,0"
+                    Text="{Binding taskDate, Mode=OneWay}"
+                    ToolTip="Cuurent Task Date" />
+                <TextBlock
+                    x:Name="statusTaskCount"
+                    Margin="0,0,20,0"
+                    ToolTip="Today Task Completion Rate">
+                    <TextBlock>
+                        <Run Text="Items : " />
+                        <Run Text="{Binding taskCount, Mode=OneWay}" />
+
+                    </TextBlock>
+                </TextBlock>
+            </StackPanel>
+        </StatusBar>
+        <ScrollViewer DockPanel.Dock="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <StackPanel Name="TaskWindow">
+                <ItemsControl ClipToBounds="True" ItemsSource="{Binding TaskWidgets}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:AddTask />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+
+
+    </DockPanel>
 </Window>
