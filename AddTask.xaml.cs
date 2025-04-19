@@ -67,15 +67,22 @@ namespace WpfApp1
                 MessageBox.Show("The  Task Name Cannot be empty.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
+<<<<<<< HEAD
             
             if ((taskViewModel.TaskDate.Date >=  DateTime.Today)  &&( taskViewModel.TaskStatus == "Completed" || taskViewModel.TaskStatus == "Missed"))
             {
                 
                 if ( taskViewModel.TaskDate.Date == DateTime.Today && taskTime > DateTime.Now.TimeOfDay)
+=======
+            if ((taskViewModel.TaskDate >=  DateTime.Today)  &&( taskViewModel.TaskStatus == "Completed" || taskViewModel.TaskStatus == "Missed"))
+            { 
+                if(taskTime >= DateTime.Now.TimeOfDay)
+>>>>>>> parent of 314a0e3 (Delete AddTask.xaml.cs)
                 {
                     MessageBox.Show("A Future Task cannot be marked as Completed or Missed", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     return;
                 }
+<<<<<<< HEAD
                 else if(taskViewModel.TaskDate.Date > DateTime.Today)
                 {
                     MessageBox.Show("A Future Task cannot be marked as Completed or Missed !", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -84,11 +91,20 @@ namespace WpfApp1
                 
             }
             else if(taskViewModel.TaskStatus == "Pending" && taskViewModel.TaskDate.Date < DateTime.Today)
+=======
+                
+            }
+            else if(taskViewModel.TaskStatus == "Pending" && taskViewModel.TaskDate < DateTime.Today)
+>>>>>>> parent of 314a0e3 (Delete AddTask.xaml.cs)
             {
                 MessageBox.Show("Please select a future date.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
+<<<<<<< HEAD
             else if (taskViewModel.TaskStatus == "Pending" && ( taskViewModel.TaskDate.Date == DateTime.Today && taskTime < DateTime.Now.TimeOfDay))
+=======
+            else if (taskViewModel.TaskStatus == "Pending" && ( taskViewModel.TaskDate == DateTime.Today && taskTime < DateTime.Now.TimeOfDay))
+>>>>>>> parent of 314a0e3 (Delete AddTask.xaml.cs)
             {
                 MessageBox.Show("Please select a future time.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
@@ -105,7 +121,10 @@ namespace WpfApp1
             if(taskButtonText == "Update Task")
             {
                 SQLiteDB.updateTask(task);
+<<<<<<< HEAD
                 MessageBox.Show("Task Updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+=======
+>>>>>>> parent of 314a0e3 (Delete AddTask.xaml.cs)
             }
             else
             {
