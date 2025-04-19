@@ -67,21 +67,28 @@ namespace WpfApp1
                 MessageBox.Show("The  Task Name Cannot be empty.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            if ((taskViewModel.TaskDate >=  DateTime.Today)  &&( taskViewModel.TaskStatus == "Completed" || taskViewModel.TaskStatus == "Missed"))
-            { 
-                if(taskTime >= DateTime.Now.TimeOfDay)
+            
+            if ((taskViewModel.TaskDate.Date >=  DateTime.Today)  &&( taskViewModel.TaskStatus == "Completed" || taskViewModel.TaskStatus == "Missed"))
+            {
+                
+                if ( taskViewModel.TaskDate.Date == DateTime.Today && taskTime > DateTime.Now.TimeOfDay)
                 {
                     MessageBox.Show("A Future Task cannot be marked as Completed or Missed", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     return;
                 }
+                else if(taskViewModel.TaskDate.Date > DateTime.Today)
+                {
+                    MessageBox.Show("A Future Task cannot be marked as Completed or Missed !", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return;
+                }
                 
             }
-            else if(taskViewModel.TaskStatus == "Pending" && taskViewModel.TaskDate < DateTime.Today)
+            else if(taskViewModel.TaskStatus == "Pending" && taskViewModel.TaskDate.Date < DateTime.Today)
             {
                 MessageBox.Show("Please select a future date.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            else if (taskViewModel.TaskStatus == "Pending" && ( taskViewModel.TaskDate == DateTime.Today && taskTime < DateTime.Now.TimeOfDay))
+            else if (taskViewModel.TaskStatus == "Pending" && ( taskViewModel.TaskDate.Date == DateTime.Today && taskTime < DateTime.Now.TimeOfDay))
             {
                 MessageBox.Show("Please select a future time.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
@@ -98,6 +105,7 @@ namespace WpfApp1
             if(taskButtonText == "Update Task")
             {
                 SQLiteDB.updateTask(task);
+                MessageBox.Show("Task Updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {

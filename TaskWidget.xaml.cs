@@ -59,7 +59,7 @@ namespace WpfApp1
             task = addTask.task;
             Initializer();
             MainWindow.tasks![(MainWindow.tasks.FindIndex(t => t.Id == Id)!) ]= task;
-            MessageBox.Show("Task Updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            
 
         }
 

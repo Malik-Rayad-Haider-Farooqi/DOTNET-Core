@@ -5,9 +5,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WpfApp1"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="TO DO "
+    Name="Main"
+    Title="ToDew"
     Width="800"
     Height="450"
+    MinWidth="650"
+    MinHeight="300"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
@@ -21,34 +24,51 @@
             Panel.ZIndex="10000"
             Background="#4cff00"
             DockPanel.Dock="Bottom">
-            <StackPanel Orientation="Horizontal">
+            <Grid Width="{Binding ActualWidth, ElementName=Main}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
                 <TextBlock
                     x:Name="statusTaskStatus"
+                    Grid.Column="0"
                     Margin="0,0,20,0"
                     Text="{Binding taskStatus, Mode=OneWay}"
                     ToolTip="Status" />
-                
+
                 <TextBlock
                     x:Name="statusTaskTime"
+                    Grid.Column="1"
                     Margin="0,0,20,0"
                     Text="{Binding taskTime, Mode=OneWay}"
                     ToolTip="Cuurent Task Time" />
                 <TextBlock
                     x:Name="statusTaskDate"
+                    Grid.Column="2"
                     Margin="0,0,20,0"
                     Text="{Binding taskDate, Mode=OneWay}"
                     ToolTip="Cuurent Task Date" />
                 <TextBlock
                     x:Name="statusTaskCount"
+                    Grid.Column="3"
                     Margin="0,0,20,0"
                     ToolTip="Today Task Completion Rate">
                     <TextBlock>
                         <Run Text="Items : " />
                         <Run Text="{Binding taskCount, Mode=OneWay}" />
-
                     </TextBlock>
                 </TextBlock>
-            </StackPanel>
+                <TextBlock
+                    x:Name="Companyname"
+                    Grid.Column="4"
+                    Margin="0,0,20,0"
+                    HorizontalAlignment="Right"
+                    Text="Creation of Love By ❤️ IR. Atelier ❤️"
+                    ToolTip="Creation of Love" />
+            </Grid>
         </StatusBar>
         <ScrollViewer DockPanel.Dock="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <StackPanel Name="TaskWindow">
