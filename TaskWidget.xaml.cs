@@ -59,7 +59,11 @@ namespace WpfApp1
             task = addTask.task;
             Initializer();
             MainWindow.tasks![(MainWindow.tasks.FindIndex(t => t.Id == Id)!) ]= task;
+<<<<<<< HEAD
             
+=======
+            MessageBox.Show("Task Updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+>>>>>>> parent of b94b59e (Delete TaskWidget.xaml.cs)
 
         }
 
