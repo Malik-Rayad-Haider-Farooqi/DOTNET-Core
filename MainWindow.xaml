@@ -11,14 +11,11 @@
     Height="450"
     MinWidth="650"
     MinHeight="300"
+    Background="#FFD9BE9A"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
-    <DockPanel x:Name="MainPanel" LastChildFill="True">
-        <Button
-            Click="Button_Click"
-            Content="Add Task"
-            DockPanel.Dock="Top" />
+    <DockPanel LastChildFill="False">
         <StatusBar
             Height="20"
             Panel.ZIndex="10000"
@@ -70,18 +67,88 @@
                     ToolTip="Creation of Love" />
             </Grid>
         </StatusBar>
-        <ScrollViewer DockPanel.Dock="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <StackPanel Name="TaskWindow">
-                <ItemsControl ClipToBounds="True" ItemsSource="{Binding TaskWidgets}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:AddTask />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </ScrollViewer>
+        <Grid DockPanel.Dock="Right">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="Sort By: " />
+            <ComboBox
+                Grid.Row="1"
+                Grid.Column="1"
+                SelectedIndex="0">
+                <ComboBoxItem Content="Name" />
+                <ComboBoxItem Content="Date" />
+                <ComboBoxItem Content="Status" />
+
+            </ComboBox>
+        </Grid>
+        <DockPanel x:Name="MainPanel" LastChildFill="True">
+            <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Background="#FFBE7328"
+                    BorderBrush="#FFD9BE9A"
+                    Click="Button_Click"
+                    Content="Add Task"
+                    DockPanel.Dock="Top"
+                    FontFamily="Jameel Noori Nastaleeq"
+                    FontSize="16"
+                    FontWeight="Bold" />
+                <Button
+                    x:Name="filterButton"
+                    Grid.Column="1"
+                    Margin="2,0,2,0"
+                    Background="#FFBE7328"
+                    BorderBrush="#FFD9BE9A"
+                    Click="filter_Click"
+                    Content="Filters/Sorting"
+                    DockPanel.Dock="Top"
+                    FontFamily="Jameel Noori Nastaleeq"
+                    FontSize="16"
+                    FontWeight="Bold" />
+                <Button
+                    x:Name="SettigsButton"
+                    Grid.Column="2"
+                    Margin="0,0,0,0"
+                    Background="#FFBE7328"
+                    BorderBrush="#FFD9BE9A"
+                    Click="SettigsButton_Click"
+                    Content="Settings"
+                    DockPanel.Dock="Top"
+                    FontFamily="Jameel Noori Nastaleeq"
+                    FontSize="16"
+                    FontWeight="Bold" />
+            </Grid>
 
 
+            <ScrollViewer DockPanel.Dock="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <StackPanel Name="TaskWindow">
+                    <ItemsControl ClipToBounds="True" ItemsSource="{Binding TaskWidgets}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:AddTask />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+
+
+        </DockPanel>
     </DockPanel>
 </Window>

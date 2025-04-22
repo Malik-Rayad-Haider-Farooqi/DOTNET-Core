@@ -81,6 +81,7 @@ namespace WpfApp1
         {
             TaskWidget taskWidget = new TaskWidget(task) { task = task };
             TaskWidgets.Add(taskWidget);
+            
         }
         public static void statusBarControl(string ts, string tt, string td , int count)
         {
@@ -90,6 +91,15 @@ namespace WpfApp1
             CurrentInstance!.viewModel.taskCount = count;
             
         }
-        
+
+        private void SettigsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void filter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

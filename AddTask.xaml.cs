@@ -70,10 +70,6 @@ namespace WpfApp1
             }
 
 
-            if ((taskViewModel.TaskDate.Date >= DateTime.Today) && (taskViewModel.TaskStatus == "Completed" || taskViewModel.TaskStatus == "Missed"))
-            {
-
-                if (taskViewModel.TaskDate.Date == DateTime.Today && taskTime > DateTime.Now.TimeOfDay)
 
                     if ((taskViewModel.TaskDate.Date >= DateTime.Today) && (taskViewModel.TaskStatus == "Completed" || taskViewModel.TaskStatus == "Missed"))
                     {
@@ -131,7 +127,7 @@ namespace WpfApp1
 
 
 
-            }
+            
 
 
 
