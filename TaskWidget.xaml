@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<UserControl
     x:Class="WpfApp1.TaskWidget"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -90,3 +91,97 @@
 
 </UserControl>
 
+=======
+﻿<UserControl
+    x:Class="WpfApp1.TaskWidget"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp1"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Padding="5,5,5,5"
+    d:DesignWidth="800"
+    BorderBrush="Gray"
+    BorderThickness="2,3,2,3"
+    MouseEnter="UserControl_MouseEnter"
+    MouseLeave="UserControl_MouseLeave"
+    mc:Ignorable="d">
+
+    <Grid DockPanel.Dock="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock
+            Name="WidgetTaskName"
+            Grid.Row="0"
+            Grid.Column="0">
+            <Run Text="Task Name:" />
+            <Run Text="{Binding TaskName}" />
+        </TextBlock>
+        <TextBlock
+            Name="WidgetTaskDate"
+            Grid.Row="0"
+            Grid.Column="1">
+            <Run Text="Task Date:" />
+            <Run Text="{Binding TaskDate}" />
+        </TextBlock>
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="0"
+            Orientation="Horizontal">
+            <TextBlock Name="WidgetTaskStatusLabel" Margin="0,0,5,0">
+                <Run Text="Task Status:" />
+            </TextBlock>
+
+            <ComboBox
+                x:Name="WidgetTaskStatus"
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="135"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                ItemsSource="{Binding StatusOptions}"
+                SelectedItem="{Binding TaskStatus, Mode=TwoWay}" IsReadOnly="True" IsEnabled="False" />
+        </StackPanel>
+        <TextBlock
+            Name="WidgetTaskTime"
+            Grid.Row="1"
+            Grid.Column="1">
+            <Run Text="Task Time:" />
+            <Run Text="{Binding TaskTime}" />
+        </TextBlock>
+        <TextBlock
+            Name="WidgetTaskDescription"
+            Grid.Row="2"
+            Grid.ColumnSpan="2">
+            <Run Text="Description:" />
+            <Run Text="{Binding TaskDescription}" />
+        </TextBlock>
+        <Button
+            Name="EditTask"
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="5,5"
+            Click="EditTask_Click"
+            Content="Edit Task" />
+        <Button
+            Name="DeleteTask"
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="5,5"
+            Click="DeleteTask_Click"
+            Content="Delete Task" />
+    </Grid>
+
+
+
+</UserControl>
+
+>>>>>>> 20590a87fc9dcf5ab841490e85afdeb890238359
