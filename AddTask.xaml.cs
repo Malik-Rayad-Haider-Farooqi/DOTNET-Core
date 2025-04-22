@@ -28,17 +28,18 @@ namespace WpfApp1
         public string? taskButtonText { get; set; }
         public int Id;
         TaskViewModel? taskViewModel;
-        public AddTask() { 
+        public AddTask()
+        {
             InitializeComponent();
         }
         public AddTask(Task task, string taskButtonText)
         {
-            
+
             InitializeComponent();
-                       
-            
+
+
             taskViewModel = new TaskViewModel();
-         
+
             this.DataContext = taskViewModel;
             taskViewModel.TaskButtonText = taskButtonText;
             taskViewModel.TaskName = task.taskName;
@@ -48,7 +49,7 @@ namespace WpfApp1
             taskViewModel.TaskMinute = task.taskTime.Minutes;
             taskViewModel.TaskSecond = task.taskTime.Seconds;
             taskViewModel.TaskStatus = task.taskStatus;
-            
+
 
 
 
@@ -58,68 +59,78 @@ namespace WpfApp1
         private void btnAddTask_Click(object sender, RoutedEventArgs e)
         {
             TimeSpan taskTime = new TimeSpan(taskViewModel!.TaskHour!.Value, taskViewModel!.TaskMinute!.Value, taskViewModel!.TaskSecond!.Value);
-            
 
 
-            
+
+
             if (string.IsNullOrEmpty(taskViewModel.TaskName))
             {
                 MessageBox.Show("The  Task Name Cannot be empty.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            
-            if ((taskViewModel.TaskDate.Date >=  DateTime.Today)  &&( taskViewModel.TaskStatus == "Completed" || taskViewModel.TaskStatus == "Missed"))
-            {
-                
-                if ( taskViewModel.TaskDate.Date == DateTime.Today && taskTime > DateTime.Now.TimeOfDay)
+
+
+
+                    if ((taskViewModel.TaskDate.Date >= DateTime.Today) && (taskViewModel.TaskStatus == "Completed" || taskViewModel.TaskStatus == "Missed"))
+                    {
+                        if (taskTime >= DateTime.Now.TimeOfDay)
+
+                        {
+                            MessageBox.Show("A Future Task cannot be marked as Completed or Missed", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            return;
+                        }
+
+                        else if (taskViewModel.TaskDate.Date > DateTime.Today)
+                        {
+                            MessageBox.Show("A Future Task cannot be marked as Completed or Missed !", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            return;
+                        }
+
+                    }
+
+                    else if (taskViewModel.TaskStatus == "Pending" && taskViewModel.TaskDate.Date < DateTime.Today)
+
+                    {
+                        MessageBox.Show("Please select a future date.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+
+                    else if (taskViewModel.TaskStatus == "Pending" && (taskViewModel.TaskDate == DateTime.Today && taskTime < DateTime.Now.TimeOfDay))
+
+                    {
+                        MessageBox.Show("Please select a future time.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+                task = new Task
                 {
-                    MessageBox.Show("A Future Task cannot be marked as Completed or Missed", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    return;
-                }
-                else if(taskViewModel.TaskDate.Date > DateTime.Today)
+                    Id = Id,
+                    taskName = taskViewModel.TaskName,
+                    taskDate = taskViewModel.TaskDate,
+                    taskTime = taskTime,
+                    taskDescription = taskViewModel.TaskDescription,
+                    taskStatus = taskViewModel.TaskStatus
+                };
+                if (taskButtonText == "Update Task")
                 {
-                    MessageBox.Show("A Future Task cannot be marked as Completed or Missed !", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    return;
+                    SQLiteDB.updateTask(task);
+
+                    MessageBox.Show("Task Updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
-                
-            }
-            else if(taskViewModel.TaskStatus == "Pending" && taskViewModel.TaskDate.Date < DateTime.Today)
-            {
-                MessageBox.Show("Please select a future date.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                return;
-            }
-            else if (taskViewModel.TaskStatus == "Pending" && ( taskViewModel.TaskDate.Date == DateTime.Today && taskTime < DateTime.Now.TimeOfDay))
-            {
-                MessageBox.Show("Please select a future time.", "Alert", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                return;
-            }
-            task = new Task
-            {
-                Id = Id,                
-                taskName = taskViewModel.TaskName,
-                taskDate = taskViewModel.TaskDate,
-                taskTime = taskTime,
-                taskDescription = taskViewModel.TaskDescription,
-                taskStatus = taskViewModel.TaskStatus
-            };
-            if(taskButtonText == "Update Task")
-            {
-                SQLiteDB.updateTask(task);
-                MessageBox.Show("Task Updated", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                SQLiteDB.insertTask(task);
-            }
+                else
+                {
+                    SQLiteDB.insertTask(task);
+                }
+
+                DialogResult = true;
+
+
+
+
             
-            DialogResult = true;
-                
-            
+
 
 
         }
-        
-
-
     }
 }
