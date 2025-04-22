@@ -15,11 +15,11 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
-    <DockPanel LastChildFill="False">
+    <DockPanel LastChildFill="true">
         <StatusBar
             Height="20"
             Panel.ZIndex="10000"
-            Background="#4cff00"
+            Background="#FFB88A5B"
             DockPanel.Dock="Bottom">
             <Grid Width="{Binding ActualWidth, ElementName=Main}">
                 <Grid.ColumnDefinitions>
@@ -67,88 +67,259 @@
                     ToolTip="Creation of Love" />
             </Grid>
         </StatusBar>
-        <Grid DockPanel.Dock="Right">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <Grid x:Name="ParentGrid" DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="0"
-                Text="Sort By: " />
-            <ComboBox
-                Grid.Row="1"
-                Grid.Column="1"
-                SelectedIndex="0">
-                <ComboBoxItem Content="Name" />
-                <ComboBoxItem Content="Date" />
-                <ComboBoxItem Content="Status" />
-
-            </ComboBox>
-        </Grid>
-        <DockPanel x:Name="MainPanel" LastChildFill="True">
-            <Grid DockPanel.Dock="Top">
+            <Grid
+                x:Name="SettingsPane"
+                Grid.Column="2"
+                Width="{Binding ActualWidth, ElementName=FilterPane}"
+                Margin="2,0,0,0"
+                Panel.ZIndex="100"
+                DockPanel.Dock="Right"
+                Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="*" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+
                 </Grid.ColumnDefinitions>
-                <Button
-                    Grid.Column="0"
-                    Background="#FFBE7328"
-                    BorderBrush="#FFD9BE9A"
-                    Click="Button_Click"
-                    Content="Add Task"
-                    DockPanel.Dock="Top"
-                    FontFamily="Jameel Noori Nastaleeq"
-                    FontSize="16"
-                    FontWeight="Bold" />
-                <Button
-                    x:Name="filterButton"
-                    Grid.Column="1"
-                    Margin="2,0,2,0"
-                    Background="#FFBE7328"
-                    BorderBrush="#FFD9BE9A"
-                    Click="filter_Click"
-                    Content="Filters/Sorting"
-                    DockPanel.Dock="Top"
-                    FontFamily="Jameel Noori Nastaleeq"
-                    FontSize="16"
-                    FontWeight="Bold" />
-                <Button
-                    x:Name="SettigsButton"
-                    Grid.Column="2"
-                    Margin="0,0,0,0"
-                    Background="#FFBE7328"
-                    BorderBrush="#FFD9BE9A"
-                    Click="SettigsButton_Click"
-                    Content="Settings"
-                    DockPanel.Dock="Top"
-                    FontFamily="Jameel Noori Nastaleeq"
-                    FontSize="16"
-                    FontWeight="Bold" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Padding="20,5,20,10"
+                    HorizontalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Text="Settings" />
+                <DockPanel
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    LastChildFill="False">
+                    <Button
+                        x:Name="SaveSetting"
+                        VerticalAlignment="Center"
+                        Background="#FFB6722D"
+                        Click="SaveSetting_Click"
+                        Content="Save Settings"
+                        DockPanel.Dock="Bottom"
+                        FontFamily="Jameel Noori Nastaleeq"
+                        FontSize="18"
+                        FontWeight="Bold" />
+                </DockPanel>
             </Grid>
+            <Grid
+                x:Name="FilterPane"
+                Grid.Column="1"
+                Margin="2,0,0,0"
+                HorizontalAlignment="Center"
+                Panel.ZIndex="100"
+                DockPanel.Dock="Right">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" MinHeight="25" />
+                    <RowDefinition Height="Auto" MinHeight="25" />
+                    <RowDefinition Height="Auto" MinHeight="25" />
+                    <RowDefinition Height="Auto" MinHeight="25" />
+                    <RowDefinition Height="Auto" MinHeight="25" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="70" />
+                    <ColumnDefinition MinWidth="100" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Padding="20,5,20,10"
+                    HorizontalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Text="Filter / Sort" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="5,5,5,20"
+                    Text="Sort By: " />
+                <ComboBox
+                    x:Name="SortBy"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,5,5,20">
+                    <ComboBoxItem Content="None" />
+                    <ComboBoxItem Content="Date" />
+                    <ComboBoxItem Content="Name" />
+                    <ComboBoxItem Content="Status" />
+
+                </ComboBox>
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="5,5,5,20"
+                    Text="Filter By: " />
+                <ComboBox
+                    x:Name="FilterBy"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Margin="0,5,5,20"
+                    SelectedIndex="0">
+                    <ComboBoxItem Content="None" />
+                    <ComboBoxItem Content="Date" />
+                    <ComboBoxItem Content="Name" />
+                    <ComboBoxItem Content="Status" />
+
+                </ComboBox>
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Margin="5,5,5,20"
+                    Text="Type : " />
+                <ComboBox
+                    x:Name="orderBy"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="0,5,5,20"
+                    SelectedIndex="0">
+                    <ComboBoxItem Content="Ascending" />
+                    <ComboBoxItem Content="Descending" />
+                </ComboBox>
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Margin="5,5,5,20"
+                    Text="Status : "
+                    Visibility="Collapsed" />
+                <ComboBox
+                    x:Name="FilterStatus"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="0,5,5,20"
+                    SelectedIndex="0"
+                    Visibility="Collapsed">
+                    <ComboBoxItem Content="Pending" />
+                    <ComboBoxItem Content="Missed" />
+                    <ComboBoxItem Content="Completed" />
+                </ComboBox>
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Margin="5,5,5,5"
+                    Text=" Start Date : " />
+                <DatePicker
+                    x:Name="FilterStartDate"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="0,5,5,1"
+                    IsTodayHighlighted="True"
+                    SelectedDateFormat="Long" />
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Margin="5,5,5,5"
+                    Text=" End Date : " />
+                <DatePicker
+                    x:Name="FilterEndDate"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="0,5,5,5"
+                    IsTodayHighlighted="True"
+                    SelectedDateFormat="Long" />
+                <DockPanel
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    LastChildFill="False">
+                    <Button
+                        x:Name="applyFilter"
+                        VerticalAlignment="Center"
+                        Background="#FFB6722D"
+                        Click="applyFilter_Click"
+                        Content="Apply Filters"
+                        DockPanel.Dock="Bottom"
+                        FontFamily="Jameel Noori Nastaleeq"
+                        FontSize="18"
+                        FontWeight="Bold" />
+                    <Button
+                        x:Name="ClearFilter"
+                        Margin="0,2"
+                        VerticalAlignment="Center"
+                        Background="#FFB6722D"
+                        Click="ClearFilter_Click"
+                        Content="Clear Filters"
+                        DockPanel.Dock="Bottom"
+                        FontFamily="Jameel Noori Nastaleeq"
+                        FontSize="18"
+                        FontWeight="Bold" />
+                </DockPanel>
+            </Grid>
+            <DockPanel x:Name="MainPanel" LastChildFill="True">
+                <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="0"
+                        Background="#FFBE7328"
+                        BorderBrush="#FFD9BE9A"
+                        Click="Button_Click"
+                        Content="Add Task"
+                        DockPanel.Dock="Top"
+                        FontFamily="Jameel Noori Nastaleeq"
+                        FontSize="16"
+                        FontWeight="Bold" />
+                    <Button
+                        x:Name="filterButton"
+                        Grid.Column="1"
+                        Margin="2,0,2,0"
+                        Background="#FFBE7328"
+                        BorderBrush="#FFD9BE9A"
+                        Click="filter_Click"
+                        Content="Filters/Sorting"
+                        DockPanel.Dock="Top"
+                        FontFamily="Jameel Noori Nastaleeq"
+                        FontSize="16"
+                        FontWeight="Bold" />
+                    <Button
+                        x:Name="SettigsButton"
+                        Grid.Column="2"
+                        Margin="0,0,0,0"
+                        Background="#FFBE7328"
+                        BorderBrush="#FFD9BE9A"
+                        Click="SettigsButton_Click"
+                        Content="Settings"
+                        Cursor="Arrow"
+                        DockPanel.Dock="Top"
+                        FontFamily="Jameel Noori Nastaleeq"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        ToolTip="Comming Soon" />
+
+                </Grid>
 
 
-            <ScrollViewer DockPanel.Dock="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <StackPanel Name="TaskWindow">
-                    <ItemsControl ClipToBounds="True" ItemsSource="{Binding TaskWidgets}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:AddTask />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </ScrollViewer>
+                <ScrollViewer DockPanel.Dock="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <StackPanel Name="TaskWindow">
+                        <ItemsControl ClipToBounds="True" ItemsSource="{Binding TaskWidgets}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:AddTask />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
 
 
-        </DockPanel>
+            </DockPanel>
+        </Grid>
     </DockPanel>
 </Window>

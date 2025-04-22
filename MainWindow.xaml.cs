@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,11 +26,12 @@ namespace WpfApp1
         public static  List<Task>? tasks;
         MainWindowViewModel viewModel = new MainWindowViewModel();
         public static MainWindow? CurrentInstance { get; private set; }
-       
+        
 
         public MainWindow()
         {
             InitializeComponent();
+           
             this.DataContext = viewModel;
             CurrentInstance = this;
             viewModel.taskCount =  SQLiteDB.dbInitializer();
@@ -94,10 +96,40 @@ namespace WpfApp1
 
         private void SettigsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            SettingsPane.Visibility = Visibility.Visible;
         }
 
         private void filter_Click(object sender, RoutedEventArgs e)
+        {
+            FilterPane.Visibility = Visibility.Visible;
+            
+        }
+
+        private void applyFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if(SortBy.SelectedItem.ToString() == "Date")
+            {
+                switch (FilterBy.SelectedItem.ToString())
+                {
+                    case "Date":
+                        break;
+                    case "Name":
+                        break;
+                    case "Status":
+                        break;
+                    default:
+                        break;
+                }
+            }
+            FilterPane.Visibility = Visibility.Collapsed;
+        }
+
+        private void SaveSetting_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsPane.Visibility = Visibility.Collapsed;
+        }
+
+        private void ClearFilter_Click(object sender, RoutedEventArgs e)
         {
 
         }
