@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿<Window
     x:Class="WpfApp1.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -74,6 +73,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
             <Grid
                 x:Name="SettingsPane"
                 Grid.Column="2"
@@ -116,13 +116,15 @@
                         FontWeight="Bold" />
                 </DockPanel>
             </Grid>
+
             <Grid
                 x:Name="FilterPane"
                 Grid.Column="1"
                 Margin="2,0,0,0"
                 HorizontalAlignment="Center"
                 Panel.ZIndex="100"
-                DockPanel.Dock="Right">
+                DockPanel.Dock="Right"
+                Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" MinHeight="25" />
@@ -154,13 +156,9 @@
                     x:Name="SortBy"
                     Grid.Row="1"
                     Grid.Column="1"
-                    Margin="0,5,5,20">
-                    <ComboBoxItem Content="None" />
-                    <ComboBoxItem Content="Date" />
-                    <ComboBoxItem Content="Name" />
-                    <ComboBoxItem Content="Status" />
-
-                </ComboBox>
+                    Margin="0,5,5,20"
+                    ItemsSource="{Binding FilterItems}"
+                    SelectedItem="{Binding SortBy, Mode=TwoWay}" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="0"
@@ -171,13 +169,9 @@
                     Grid.Row="2"
                     Grid.Column="2"
                     Margin="0,5,5,20"
-                    SelectedIndex="0">
-                    <ComboBoxItem Content="None" />
-                    <ComboBoxItem Content="Date" />
-                    <ComboBoxItem Content="Name" />
-                    <ComboBoxItem Content="Status" />
-
-                </ComboBox>
+                    ItemsSource="{Binding FilterItems}"
+                    SelectedItem="{Binding FilterBy, Mode=TwoWay}"
+                    SelectionChanged="FilterBy_SelectionChanged" />
                 <TextBlock
                     Grid.Row="3"
                     Grid.Column="0"
@@ -188,11 +182,10 @@
                     Grid.Row="3"
                     Grid.Column="1"
                     Margin="0,5,5,20"
-                    SelectedIndex="0">
-                    <ComboBoxItem Content="Ascending" />
-                    <ComboBoxItem Content="Descending" />
-                </ComboBox>
+                    ItemsSource="{Binding FilterOrderItems}"
+                    SelectedItem="{Binding OrderBy, Mode=TwoWay}" />
                 <TextBlock
+                    x:Name="FilterStatusLabel"
                     Grid.Row="4"
                     Grid.Column="0"
                     Margin="5,5,5,20"
@@ -203,36 +196,54 @@
                     Grid.Row="4"
                     Grid.Column="1"
                     Margin="0,5,5,20"
-                    SelectedIndex="0"
-                    Visibility="Collapsed">
-                    <ComboBoxItem Content="Pending" />
-                    <ComboBoxItem Content="Missed" />
-                    <ComboBoxItem Content="Completed" />
-                </ComboBox>
+                    ItemsSource="{Binding FilterStatusItems}"
+                    SelectedItem="{Binding FilterStatus, Mode=TwoWay}"
+                    Visibility="Collapsed" />
                 <TextBlock
+                    x:Name="FilterStartDateLabel"
                     Grid.Row="4"
                     Grid.Column="0"
                     Margin="5,5,5,5"
-                    Text=" Start Date : " />
+                    Text=" Start Date : "
+                    Visibility="Collapsed" />
                 <DatePicker
                     x:Name="FilterStartDate"
                     Grid.Row="4"
                     Grid.Column="1"
                     Margin="0,5,5,1"
+                    DisplayDate="{Binding FilterStartDate, Mode=TwoWay}"
                     IsTodayHighlighted="True"
-                    SelectedDateFormat="Long" />
+                    SelectedDateFormat="Long"
+                    Visibility="Collapsed" />
                 <TextBlock
+                    x:Name="FilterEndDateLabel"
                     Grid.Row="5"
                     Grid.Column="0"
                     Margin="5,5,5,5"
-                    Text=" End Date : " />
+                    Text=" End Date : "
+                    Visibility="Collapsed" />
                 <DatePicker
                     x:Name="FilterEndDate"
                     Grid.Row="5"
                     Grid.Column="1"
                     Margin="0,5,5,5"
+                    DisplayDate="{Binding FilterEndDate, Mode=TwoWay}"
                     IsTodayHighlighted="True"
-                    SelectedDateFormat="Long" />
+                    SelectedDateFormat="Long"
+                    Visibility="Collapsed" />
+                <TextBlock
+                    x:Name="FilterContainsLabel"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Margin="5,5,5,5"
+                    Text="Contains : "
+                    Visibility="Collapsed" />
+                <TextBox
+                    x:Name="FilterContains"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Text="{Binding FilterContains, Mode=TwoWay}"
+                    Visibility="Collapsed" />
                 <DockPanel
                     Grid.Row="6"
                     Grid.ColumnSpan="2"
@@ -260,6 +271,7 @@
                         FontWeight="Bold" />
                 </DockPanel>
             </Grid>
+
             <DockPanel x:Name="MainPanel" LastChildFill="True">
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
@@ -324,330 +336,3 @@
         </Grid>
     </DockPanel>
 </Window>
-=======
-﻿<Window
-    x:Class="WpfApp1.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:WpfApp1"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Name="Main"
-    Title="ToDew"
-    Width="800"
-    Height="450"
-    MinWidth="650"
-    MinHeight="300"
-    Background="#FFD9BE9A"
-    WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
-
-    <DockPanel LastChildFill="true">
-        <StatusBar
-            Height="20"
-            Panel.ZIndex="10000"
-            Background="#FFB88A5B"
-            DockPanel.Dock="Bottom">
-            <Grid Width="{Binding ActualWidth, ElementName=Main}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    x:Name="statusTaskStatus"
-                    Grid.Column="0"
-                    Margin="0,0,20,0"
-                    Text="{Binding taskStatus, Mode=OneWay}"
-                    ToolTip="Status" />
-
-                <TextBlock
-                    x:Name="statusTaskTime"
-                    Grid.Column="1"
-                    Margin="0,0,20,0"
-                    Text="{Binding taskTime, Mode=OneWay}"
-                    ToolTip="Cuurent Task Time" />
-                <TextBlock
-                    x:Name="statusTaskDate"
-                    Grid.Column="2"
-                    Margin="0,0,20,0"
-                    Text="{Binding taskDate, Mode=OneWay}"
-                    ToolTip="Cuurent Task Date" />
-                <TextBlock
-                    x:Name="statusTaskCount"
-                    Grid.Column="3"
-                    Margin="0,0,20,0"
-                    ToolTip="Today Task Completion Rate">
-                    <TextBlock>
-                        <Run Text="Items : " />
-                        <Run Text="{Binding taskCount, Mode=OneWay}" />
-                    </TextBlock>
-                </TextBlock>
-                <TextBlock
-                    x:Name="Companyname"
-                    Grid.Column="4"
-                    Margin="0,0,20,0"
-                    HorizontalAlignment="Right"
-                    Text="Creation of Love By ❤️ IR. Atelier ❤️"
-                    ToolTip="Creation of Love" />
-            </Grid>
-        </StatusBar>
-        <Grid x:Name="ParentGrid" DockPanel.Dock="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid
-                x:Name="SettingsPane"
-                Grid.Column="2"
-                Width="{Binding ActualWidth, ElementName=FilterPane}"
-                Margin="2,0,0,0"
-                Panel.ZIndex="100"
-                DockPanel.Dock="Right"
-                Visibility="Collapsed">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="*" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.ColumnSpan="2"
-                    Padding="20,5,20,10"
-                    HorizontalAlignment="Center"
-                    FontSize="18"
-                    FontWeight="Bold"
-                    Text="Settings" />
-                <DockPanel
-                    Grid.Row="2"
-                    Grid.ColumnSpan="2"
-                    LastChildFill="False">
-                    <Button
-                        x:Name="SaveSetting"
-                        VerticalAlignment="Center"
-                        Background="#FFB6722D"
-                        Click="SaveSetting_Click"
-                        Content="Save Settings"
-                        DockPanel.Dock="Bottom"
-                        FontFamily="Jameel Noori Nastaleeq"
-                        FontSize="18"
-                        FontWeight="Bold" />
-                </DockPanel>
-            </Grid>
-            <Grid
-                x:Name="FilterPane"
-                Grid.Column="1"
-                Margin="2,0,0,0"
-                HorizontalAlignment="Center"
-                Panel.ZIndex="100"
-                DockPanel.Dock="Right">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" MinHeight="25" />
-                    <RowDefinition Height="Auto" MinHeight="25" />
-                    <RowDefinition Height="Auto" MinHeight="25" />
-                    <RowDefinition Height="Auto" MinHeight="25" />
-                    <RowDefinition Height="Auto" MinHeight="25" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="70" />
-                    <ColumnDefinition MinWidth="100" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.ColumnSpan="2"
-                    Padding="20,5,20,10"
-                    HorizontalAlignment="Center"
-                    FontSize="18"
-                    FontWeight="Bold"
-                    Text="Filter / Sort" />
-
-                <TextBlock
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Margin="5,5,5,20"
-                    Text="Sort By: " />
-                <ComboBox
-                    x:Name="SortBy"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Margin="0,5,5,20">
-                    <ComboBoxItem Content="None" />
-                    <ComboBoxItem Content="Date" />
-                    <ComboBoxItem Content="Name" />
-                    <ComboBoxItem Content="Status" />
-
-                </ComboBox>
-                <TextBlock
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Margin="5,5,5,20"
-                    Text="Filter By: " />
-                <ComboBox
-                    x:Name="FilterBy"
-                    Grid.Row="2"
-                    Grid.Column="2"
-                    Margin="0,5,5,20"
-                    SelectedIndex="0">
-                    <ComboBoxItem Content="None" />
-                    <ComboBoxItem Content="Date" />
-                    <ComboBoxItem Content="Name" />
-                    <ComboBoxItem Content="Status" />
-
-                </ComboBox>
-                <TextBlock
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Margin="5,5,5,20"
-                    Text="Type : " />
-                <ComboBox
-                    x:Name="orderBy"
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Margin="0,5,5,20"
-                    SelectedIndex="0">
-                    <ComboBoxItem Content="Ascending" />
-                    <ComboBoxItem Content="Descending" />
-                </ComboBox>
-                <TextBlock
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Margin="5,5,5,20"
-                    Text="Status : "
-                    Visibility="Collapsed" />
-                <ComboBox
-                    x:Name="FilterStatus"
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    Margin="0,5,5,20"
-                    SelectedIndex="0"
-                    Visibility="Collapsed">
-                    <ComboBoxItem Content="Pending" />
-                    <ComboBoxItem Content="Missed" />
-                    <ComboBoxItem Content="Completed" />
-                </ComboBox>
-                <TextBlock
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Margin="5,5,5,20"
-                    Text=" Start Date : " />
-                <DatePicker
-                    x:Name="FilterStartDate"
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    Margin="0,5,5,1"
-                    IsTodayHighlighted="True"
-                    SelectedDateFormat="Long" />
-                <TextBlock
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    Margin="5,5,5,20"
-                    Text=" End Date : " />
-                <DatePicker
-                    x:Name="FilterEndDate"
-                    Grid.Row="5"
-                    Grid.Column="1"
-                    Margin="0,5,5,5"
-                    IsTodayHighlighted="True"
-                    SelectedDateFormat="Long" />
-                <DockPanel
-                    Grid.Row="6"
-                    Grid.ColumnSpan="2"
-                    LastChildFill="False">
-                    <Button
-                        x:Name="applyFilter"
-                        VerticalAlignment="Center"
-                        Background="#FFB6722D"
-                        Click="applyFilter_Click"
-                        Content="Apply Filters"
-                        DockPanel.Dock="Bottom"
-                        FontFamily="Jameel Noori Nastaleeq"
-                        FontSize="18"
-                        FontWeight="Bold" />
-                    <Button
-                        x:Name="ClearFilter"
-                        Margin="0,2"
-                        VerticalAlignment="Center"
-                        Background="#FFB6722D"
-                        Click="ClearFilter_Click"
-                        Content="Clear Filters"
-                        DockPanel.Dock="Bottom"
-                        FontFamily="Jameel Noori Nastaleeq"
-                        FontSize="18"
-                        FontWeight="Bold" />
-                </DockPanel>
-            </Grid>
-            <DockPanel x:Name="MainPanel" LastChildFill="True">
-                <Grid DockPanel.Dock="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Button
-                        Grid.Column="0"
-                        Background="#FFBE7328"
-                        BorderBrush="#FFD9BE9A"
-                        Click="Button_Click"
-                        Content="Add Task"
-                        DockPanel.Dock="Top"
-                        FontFamily="Jameel Noori Nastaleeq"
-                        FontSize="16"
-                        FontWeight="Bold" />
-                    <Button
-                        x:Name="filterButton"
-                        Grid.Column="1"
-                        Margin="2,0,2,0"
-                        Background="#FFBE7328"
-                        BorderBrush="#FFD9BE9A"
-                        Click="filter_Click"
-                        Content="Filters/Sorting"
-                        DockPanel.Dock="Top"
-                        FontFamily="Jameel Noori Nastaleeq"
-                        FontSize="16"
-                        FontWeight="Bold" />
-                    <Button
-                        x:Name="SettigsButton"
-                        Grid.Column="2"
-                        Margin="0,0,0,0"
-                        Background="#FFBE7328"
-                        BorderBrush="#FFD9BE9A"
-                        Click="SettigsButton_Click"
-                        Content="Settings"
-                        Cursor="Arrow"
-                        DockPanel.Dock="Top"
-                        FontFamily="Jameel Noori Nastaleeq"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        ToolTip="Comming Soon" />
-
-                </Grid>
-
-
-                <ScrollViewer DockPanel.Dock="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <StackPanel Name="TaskWindow">
-                        <ItemsControl ClipToBounds="True" ItemsSource="{Binding TaskWidgets}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <local:AddTask />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </ScrollViewer>
-
-
-            </DockPanel>
-        </Grid>
-    </DockPanel>
-</Window>
->>>>>>> 20590a87fc9dcf5ab841490e85afdeb890238359
